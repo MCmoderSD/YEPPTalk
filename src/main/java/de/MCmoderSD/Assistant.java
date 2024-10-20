@@ -1,12 +1,15 @@
 package de.MCmoderSD;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import de.MCmoderSD.OpenAI.OpenAI;
 import de.MCmoderSD.OpenAI.modules.Chat;
 import de.MCmoderSD.OpenAI.modules.Speech;
 import de.MCmoderSD.OpenAI.modules.Transcription;
+
 import de.MCmoderSD.jal.AudioFile;
 import de.MCmoderSD.jal.AudioRecorder;
+
 import de.MCmoderSD.json.JsonUtility;
 
 import java.math.BigDecimal;

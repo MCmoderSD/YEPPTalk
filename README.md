@@ -7,7 +7,7 @@ It's meant as demonstration of my [OpenAI-Utility](https://github.com/MCmoderSD/
 
 ## Usage
 
-You have to provide a ``config.json`` in file in the ``resources``` folder with the following content:
+You have to provide a ``config.json`` in file in the ``resources`` folder with the following content:
 ```json
 {
   "apiKey": "YOUR_API_KEY",
