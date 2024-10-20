@@ -7,6 +7,7 @@ It's meant as demonstration of my [OpenAI-Utility](https://github.com/MCmoderSD/
 
 ## Usage
 
+You can get the API key from [OpenAI](https://platform.openai.com/signup). <br>
 You have to provide a ``config.json`` in file in the ``resources`` folder with the following content:
 ```json
 {
@@ -40,7 +41,7 @@ You have to provide a ``config.json`` in file in the ``resources`` folder with t
 }
 ```
 
-Or download the [lastest version](https://github.com/MCmoderSD/YEPPTalk/releases/latest) and run the bot with the following command line arguments:
+Or download the [latest version](https://github.com/MCmoderSD/YEPPTalk/releases/latest) and run the bot with the following command line arguments:
 ```shell
 java -jar YEPPTalk.jar "PATH_TO_CONFIG.JSON"
 ```
