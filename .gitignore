@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 docs/
 storage/
+out/
 src/main/resources/config.json
 
 ### IntelliJ IDEA ###
