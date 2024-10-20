@@ -40,7 +40,7 @@ You have to provide a ``config.json`` in file in the ``resources`` folder with t
 }
 ```
 
-or run the bot with the following command line arguments:
+Or download the [lastest version](https://github.com/MCmoderSD/YEPPTalk/releases/latest) and run the bot with the following command line arguments:
 ```shell
 java -jar YEPPTalk.jar "PATH_TO_CONFIG.JSON"
 ```
