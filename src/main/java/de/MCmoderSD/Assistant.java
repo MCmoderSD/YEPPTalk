@@ -1,19 +1,18 @@
 package de.MCmoderSD;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
+import de.MCmoderSD.JavaAudioLibrary.AudioFile;
+import de.MCmoderSD.JavaAudioLibrary.AudioRecorder;
 import de.MCmoderSD.OpenAI.OpenAI;
 import de.MCmoderSD.OpenAI.modules.Chat;
 import de.MCmoderSD.OpenAI.modules.Speech;
 import de.MCmoderSD.OpenAI.modules.Transcription;
 
-import de.MCmoderSD.jal.AudioFile;
-import de.MCmoderSD.jal.AudioRecorder;
-
 import de.MCmoderSD.json.JsonUtility;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 
 public class Assistant {
@@ -28,61 +27,14 @@ public class Assistant {
     private final Speech speech;
     private final Transcription transcription;
 
-    // Chat
-    private final int maxConversationCalls;
-    private final int maxTokenSpendingLimit;
-    private final double temperature;
-    private final int maxTokens;
-    private final double topP;
-    private final double frequencyPenalty;
-    private final double presencePenalty;
-    private final String instruction;
-
-    // Speech
-    private final String voice;
-    private final double speed;
-    private final String format;
-
-    // Transcription
-    private final String prompt;
-    private final String language;
-    private final double transcriptionTemperature;
-
     // Constructor
-    public Assistant(String configPath, boolean absolutePath) {
+    public Assistant(String configPath, boolean absolutePath) throws IOException, URISyntaxException {
 
-        // Load Configuration
-        JsonUtility jsonUtility = new JsonUtility();
-        JsonNode config = jsonUtility.load(configPath, absolutePath);
-        JsonNode chatConfig = config.get("chat");
-        JsonNode transcriptionConfig = config.get("transcription");
-        JsonNode speechConfig = config.get("speech");
-
-        // Set Associations
-        this.openAI = new OpenAI(config);
+        // Initialize OpenAI and modules
+        openAI = new OpenAI(JsonUtility.loadJson(configPath, absolutePath));
         chat = openAI.getChat();
         speech = openAI.getSpeech();
         transcription = openAI.getTranscription();
-
-        // Chat Configuration
-        maxConversationCalls = chatConfig.get("maxConversationCalls").asInt();
-        maxTokenSpendingLimit = chatConfig.get("maxTokenSpendingLimit").asInt();
-        temperature = chatConfig.get("temperature").asDouble();
-        maxTokens = chatConfig.get("maxTokens").asInt();
-        topP = chatConfig.get("topP").asDouble();
-        frequencyPenalty = chatConfig.get("frequencyPenalty").asDouble();
-        presencePenalty = chatConfig.get("presencePenalty").asDouble();
-        instruction = chatConfig.get("instruction").asText();
-
-        // Transcription Configuration
-        prompt = transcriptionConfig.get("prompt").asText();
-        language = transcriptionConfig.get("language").asText();
-        transcriptionTemperature = transcriptionConfig.get("temperature").asDouble();
-
-        // Speech Configuration
-        voice = speechConfig.get("voice").asText();
-        speed = speechConfig.get("speed").asDouble();
-        format = speechConfig.get("format").asText();
 
         // Loop
         new Thread(this::loop).start();
@@ -115,7 +67,7 @@ public class Assistant {
             AudioFile userAudio = recorder.getAudioFile();
 
             // Transcribe audio
-            String userInput = transcription.transcribe(userAudio, prompt, language, transcriptionTemperature);
+            String userInput = transcription.transcribe(userAudio);
 
             // Print user input
             System.out.println("User Input: ");
@@ -127,16 +79,16 @@ public class Assistant {
             totalCost = totalCost.add(transcriptionCost);
 
             // Chat
-            String response = chat.converse(id, maxConversationCalls, maxTokenSpendingLimit, "YEPPBot", instruction, userInput, temperature, maxTokens, topP, frequencyPenalty, presencePenalty);
+            String response = chat.converse(id, userInput);
 
             // Calculate cost
-            BigDecimal chatCost = chat.calculateConverationCost(id);
+            BigDecimal chatCost = chat.calculateConversationCost(id);
             System.out.println("Chat Cost: $" + chatCost.setScale(9, RoundingMode.HALF_UP));
             totalCost = totalCost.add(chatCost);
 
             // Text-to-Speech
             AudioFile audioResponse;
-            audioResponse = speech.tts(response, voice, format, speed);
+            audioResponse = speech.speak(response);
 
             // Calculate cost
             BigDecimal speechCost = speech.calculatePrice(response);
@@ -152,7 +104,7 @@ public class Assistant {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, URISyntaxException {
 
         // Configuration Path
         String configPath = "/config.json";

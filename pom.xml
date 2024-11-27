@@ -6,7 +6,7 @@
 
     <groupId>de.MCmoderSD</groupId>
     <artifactId>YEPPTalk</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -14,20 +14,34 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+
+        <!-- JavaAudioLibrary -->
+        <dependency>
+            <groupId>com.github.MCmoderSD</groupId>
+            <artifactId>JavaAudioLibrary</artifactId>
+            <version>1.1.6</version>
+        </dependency>
 
         <!-- JSON -->
         <dependency>
-            <groupId>de.MCmoderSD</groupId>
-            <artifactId>json</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.github.MCmoderSD</groupId>
+            <artifactId>JsonUtility</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
         <!-- OpenAI API -->
         <dependency>
-            <groupId>de.MCmoderSD</groupId>
-            <artifactId>openai</artifactId>
-            <version>1.0.2</version>
+            <groupId>com.github.MCmoderSD</groupId>
+            <artifactId>OpenAI-Utility</artifactId>
+            <version>1.1.0</version>
         </dependency>
 
     </dependencies>

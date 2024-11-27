@@ -3,7 +3,7 @@
 ## Description
 
 YEPPTalk is an AI Assistant that uses the OpenAI API to talk to you like an Alexa or Google Assistant.
-It's meant as demonstration of my [OpenAI-Utility](https://github.com/MCmoderSD/OpenAI-Utility).
+It's meant as a demonstration of my [OpenAI-Utility](https://github.com/MCmoderSD/OpenAI-Utility).
 
 ## Usage
 
@@ -11,14 +11,15 @@ You can get the API key from [OpenAI](https://platform.openai.com/signup). <br>
 You have to provide a ``config.json`` in file in the ``resources`` folder with the following content:
 ```json
 {
+  "user": "YEPPTalk",
   "apiKey": "YOUR_API_KEY",
 
   "chat": {
-    "chatModel": "gpt-4o-mini-2024-07-18",
+    "model": "gpt-4o-2024-11-20",
     "maxConversationCalls": 10,
     "maxTokenSpendingLimit": 8192,
     "temperature": 1,
-    "maxTokens": 120,
+    "maxOutputTokens": 120,
     "topP": 1,
     "frequencyPenalty": 0,
     "presencePenalty": 0,
@@ -26,14 +27,14 @@ You have to provide a ``config.json`` in file in the ``resources`` folder with t
   },
 
   "transcription": {
-    "transcriptionModel": "whisper-1",
+    "model": "whisper-1",
     "prompt": "Transcribe the following audio file to German.",
     "language": "de",
     "temperature": 1
   },
 
   "speech": {
-    "ttsModel": "tts-1",
+    "model": "tts-1",
     "voice": "onyx",
     "speed": 1,
     "format": "wav"
