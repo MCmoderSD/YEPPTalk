@@ -6,6 +6,7 @@ docs/
 storage/
 out/
 src/main/resources/config.json
+src/main/resources/META-INF/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
