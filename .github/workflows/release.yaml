@@ -108,7 +108,6 @@ jobs:
           files: ${{ env.file }}
           tag_name: ${{ env.version }}
           name: ${{ env.release-name }}
-          prerelease: true
           body: |
             **Full Changelog**: https://github.com/MCmoderSD/YEPPTalk/commits/${{ env.version }}
             
