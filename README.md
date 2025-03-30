@@ -38,7 +38,8 @@ You have to provide a ``config.json`` in file in the ``resources`` folder with t
     "model": "tts-1-hd",
     "format": "wav",
     "voice": "onyx",
-    "speed": 1
+    "speed": 1,
+    "instruction": "Talk like a funny/edgy twitch user. You always like scream YEPP in your sentences and especially the end of each sentence"
   }
 }
 ```

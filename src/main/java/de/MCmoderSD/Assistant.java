@@ -7,6 +7,9 @@ import de.MCmoderSD.JavaAudioLibrary.AudioRecorder;
 import de.MCmoderSD.json.JsonUtility;
 import de.MCmoderSD.openai.core.OpenAI;
 import de.MCmoderSD.openai.helper.Builder;
+import de.MCmoderSD.openai.objects.ChatPrompt;
+import de.MCmoderSD.openai.objects.SpeechPrompt;
+import de.MCmoderSD.openai.objects.TranscriptionPrompt;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -65,28 +68,28 @@ public class Assistant {
             AudioFile userAudio = recorder.getAudioFile();
 
             // Transcribe audio
-            String userInput = openAI.transcribe(userAudio.getAudioData());
+            TranscriptionPrompt transcriptionPrompt = openAI.transcription(userAudio.getAudioData());
+            System.out.println(BOLD + "User Input: \n" + UNBOLD + transcriptionPrompt.getText());
 
-            // Print user input
-            System.out.println("User Input: ");
-            System.out.println(userInput);
+            // Chat Prompt
+            ChatPrompt chatPrompt = openAI.prompt(id, transcriptionPrompt.getText());
 
-            // Chat
-            String response = openAI.prompt(id, userInput);
-
-            // Text-to-Speech
-            AudioFile audioResponse;
             try {
-                audioResponse = new AudioFile(openAI.speech(response));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
-            // Play audio
-            System.out.println("\nBot Response: ");
-            System.out.println(response);
-            audioResponse.play();
-            System.out.println("\n\n");
+                // Speech Prompt
+                SpeechPrompt speechPrompt = openAI.speech(chatPrompt.getText());
+
+                // Audio File
+                AudioFile audioFile = new AudioFile(speechPrompt.getAudioData());
+
+                // Play audio
+                System.out.println(BOLD + "\nBot Response: \n" + UNBOLD + chatPrompt.getText());
+                audioFile.play();
+                System.out.println("\n\n");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
     }
 
